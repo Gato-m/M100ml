@@ -8,7 +8,8 @@
     "scheme": "m100ml",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.gato-m.M100ml"
     },
     "android": {
       "adaptiveIcon": {
