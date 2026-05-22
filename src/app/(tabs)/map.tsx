@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRef } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MapView, {
   Marker,
   Polygon,
@@ -62,9 +62,16 @@ export default function MapScreen() {
               longitude: entry.coordinates[1],
             }}
             anchor={{ x: 0.5, y: 0.5 }}
-            image={iconMap[entry.icon]}
-            style={{ width: 24, height: 24 }}
-          />
+          >
+            <View style={{ alignItems: "center" }}>
+              <View style={{ marginBottom: 2 }}>
+                <Text style={styles.streetLabel}>{entry.name}</Text>
+              </View>
+              <View>
+                <Image source={iconMap[entry.icon]} style={styles.iconImage} />
+              </View>
+            </View>
+          </Marker>
         ))}
       </MapView>
       <TouchableOpacity
@@ -91,5 +98,24 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 3,
+  },
+  streetLabel: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#222",
+    backgroundColor: "rgba(255,255,255,0.85)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
+    marginTop: -26,
+    overflow: "hidden",
+    textAlign: "center",
+    borderWidth: 1,
+    borderColor: "#e02020",
+  },
+  iconImage: {
+    width: 24,
+    height: 24,
+    resizeMode: "contain",
   },
 });
