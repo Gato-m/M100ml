@@ -1,0 +1,100 @@
+{
+  "event_area": {
+    "id": "area-1",
+    "name": "Festivāla teritorija",
+    "coordinates": [
+      [26.219687664124944, 56.85426624034523],
+      [26.221288832097734, 56.85522213632769],
+      [26.222284995820818, 56.854787102861856],
+      [26.2219868420333, 56.85455262215403],
+      [26.22273426865132, 56.85435833702576],
+      [26.222542306623737, 56.854188615858256],
+      [26.221214909624532, 56.853404762056705],
+      [26.22035720694812, 56.85288665024503],
+      [26.219961029997584, 56.85306531030083],
+      [26.220339330109045, 56.85330681847466],
+      [26.220218340800507, 56.85371294585215]
+    ]
+  },
+  "icons": {
+    "no_entry": "assets/project/icons/stop.png",
+    "guest_entry": "assets/project/icons/green_arrow.png",
+    "staff_entry": "assets/project/icons/blue_arrow.png",
+    "medicine": "assets/project/icons/med.png",
+    "wc": "assets/project/icons/wc.png"
+  },
+
+  "no_entry": [
+    {
+      "id": "sign-1",
+      "name": "Valmieras iela",
+      "coordinates": [56.8542835548558, 26.219682188892858],
+      "icon": "no_entry"
+    },
+    {
+      "id": "sign-2",
+      "name": "Valmieras iela",
+      "coordinates": [56.85522213632769, 26.221288832097734],
+      "icon": "no_entry"
+    },
+    {
+      "id": "sign-3",
+      "name": "Saieta laukums",
+      "coordinates": [56.8545607321466, 26.221967430980595],
+      "icon": "no_entry"
+    },
+    {
+      "id": "sign-4",
+      "name": "Vaijes iela",
+      "coordinates": [56.8543642151258, 26.222739907179268],
+      "icon": "no_entry"
+    }
+  ],
+  "entry": [
+    {
+      "id": "entry-1",
+      "name": "Apmeklētāju ieeja",
+      "streetName": "Tirgus iela",
+      "coordinates": [56.85433488412646, 26.219557218324236],
+      "icon": "guest_entry"
+    },
+    {
+      "id": "entry-2",
+      "name": "Apmeklētāju ieeja",
+      "streetName": "Valmieras iela",
+      "coordinates": [56.8553306582918, 26.221465857893264],
+      "icon": "guest_entry"
+    },
+    {
+      "id": "entry-3",
+      "name": "Apmeklētāju ieeja",
+      "streetName": "Tirgus iela",
+      "coordinates": [56.85333011958539, 26.221360778788897],
+      "icon": "guest_entry"
+    },
+    {
+      "id": "entry-4",
+      "name": "Apmeklētāju ieeja",
+      "streetName": "Blaumaņa iela",
+      "coordinates": [56.85358819605592, 26.219993171837142],
+      "icon": "guest_entry"
+    }
+  ],
+  "staff_entry": [
+    {
+      "id": "staff-1",
+      "coordinates": [56.85432411652407, 26.222852691242273],
+      "icon": "staff_entry"
+    }
+  ],
+  "wc": {
+    "id": "wc-1",
+    "coordinates": [56.85332148438579, 26.220988424690933],
+    "icon": "wc"
+  },
+  "medical": {
+    "id": "med-1",
+    "coordinates": [56.853586936171446, 26.220352741152443],
+    "icon": "medicine"
+  }
+}
