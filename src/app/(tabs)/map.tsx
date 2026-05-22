@@ -35,6 +35,8 @@ export default function MapScreen() {
   const walkIconTransforms: Record<string, any[]> = {
     // Example: rotate and move down Blaumaņa iela
     "entry-4": [{ rotate: "-5deg" }, { translateY: 5 }],
+    // Staff entry: rotate -10deg, move right 5
+    "staff-1": [{ rotate: "-10deg" }, { translateX: 5 }],
     // Add more entries as needed
   };
 
@@ -46,6 +48,15 @@ export default function MapScreen() {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* TEST: SVG icon outside MapView */}
+      <View style={{ alignItems: "center", marginTop: 24 }}>
+        {(() => {
+          const SvgIcon = iconMap["guest_entry"];
+          return typeof SvgIcon === "function" ? (
+            <SvgIcon width={48} height={48} />
+          ) : null;
+        })()}
+      </View>
       <MapView
         ref={mapRef}
         style={StyleSheet.absoluteFillObject}
@@ -97,6 +108,7 @@ export default function MapScreen() {
         {/* Walk mode: show entry icons and street names, and staff_entry icons */}
         {mode === "walk" &&
           eventData.entry.map((entry) => {
+            const SvgIcon = iconMap[entry.icon];
             const iconStyle = [styles.iconImage, ...getIconTransform(entry.id)];
             return (
               <Marker
@@ -111,12 +123,10 @@ export default function MapScreen() {
                   <View style={{ marginBottom: 2 }}>
                     <Text style={styles.streetLabel}>{entry.streetName}</Text>
                   </View>
-                  <View>
-                    <Image
-                      source={iconMap[entry.icon]}
-                      style={iconStyle}
-                      resizeMode="contain"
-                    />
+                  <View style={iconStyle}>
+                    {typeof SvgIcon === "function" && (
+                      <SvgIcon width={24} height={24} />
+                    )}
                   </View>
                 </View>
               </Marker>
@@ -124,29 +134,34 @@ export default function MapScreen() {
           })}
         {mode === "walk" &&
           eventData.staff_entry &&
-          eventData.staff_entry.map((entry, idx) => (
-            <Marker
-              key={entry.id || `staff-${idx}`}
-              coordinate={{
-                latitude: entry.coordinates[0],
-                longitude: entry.coordinates[1],
-              }}
-              anchor={{ x: 0.5, y: 0.5 }}
-            >
-              <View style={{ alignItems: "center" }}>
-                <View style={{ marginBottom: 2 }}>
-                  <Text style={styles.streetLabel}>Personāla ieeja</Text>
+          eventData.staff_entry.map((entry, idx) => {
+            const SvgIcon = iconMap[entry.icon];
+            const iconStyle = [
+              styles.iconImage,
+              ...getIconTransform(entry.id || `staff-${idx}`),
+            ];
+            return (
+              <Marker
+                key={entry.id || `staff-${idx}`}
+                coordinate={{
+                  latitude: entry.coordinates[0],
+                  longitude: entry.coordinates[1],
+                }}
+                anchor={{ x: 0.5, y: 0.5 }}
+              >
+                <View style={{ alignItems: "center" }}>
+                  <View style={{ marginBottom: 2 }}>
+                    <Text style={styles.streetLabel}>Personāla ieeja</Text>
+                  </View>
+                  <View style={iconStyle}>
+                    {typeof SvgIcon === "function" && (
+                      <SvgIcon width={24} height={24} />
+                    )}
+                  </View>
                 </View>
-                <View>
-                  <Image
-                    source={iconMap[entry.icon]}
-                    style={styles.iconImage}
-                    resizeMode="contain"
-                  />
-                </View>
-              </View>
-            </Marker>
-          ))}
+              </Marker>
+            );
+          })}
       </MapView>
       {/* New buttons above recenter */}
       <View

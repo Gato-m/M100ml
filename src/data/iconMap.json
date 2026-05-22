@@ -1,9 +1,13 @@
-// src/data/iconMap.ts
-const iconMap: Record<string, any> = {
-  no_entry: require("../../assets/project/icons/stop.png"),
-  guest_entry: require("../../assets/project/icons/green_arrow.png"),
-  staff_entry: require("../../assets/project/icons/blue_arrow.png"),
-  medicine: require("../../assets/project/icons/med.png"),
-  wc: require("../../assets/project/icons/wc.png"),
+import GreenArrow from "../../assets/project/icons/green_arrow.svg";
+import BlueArrow from "../../assets/project/icons/blue-arrow.svg";
+import Medicine from "../../assets/project/icons/medicine.svg";
+import WcIcon from "../../assets/project/icons/wc.svg";
+
+const iconMap: Record<string, React.ComponentType<any>> = {
+  guest_entry: GreenArrow,
+  staff_entry: BlueArrow,
+  medicine: Medicine,
+  wc: WcIcon,
 };
+
 export default iconMap;
