@@ -1,7 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRef } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import MapView, { Polygon, PROVIDER_DEFAULT, UrlTile } from "react-native-maps";
+import MapView, {
+  Marker,
+  Polygon,
+  PROVIDER_DEFAULT,
+  UrlTile,
+} from "react-native-maps";
+import iconMap from "../../data/iconMap";
 import eventData from "../../data/satiksme.json";
 
 export default function MapScreen() {
@@ -47,6 +53,19 @@ export default function MapScreen() {
           fillColor="rgba(255,0,0,0.2)"
           strokeWidth={1}
         />
+        {/* No entry icons */}
+        {eventData.no_entry.map((entry) => (
+          <Marker
+            key={entry.id}
+            coordinate={{
+              latitude: entry.coordinates[0],
+              longitude: entry.coordinates[1],
+            }}
+            anchor={{ x: 0.5, y: 0.5 }}
+            image={iconMap[entry.icon]}
+            style={{ width: 24, height: 24 }}
+          />
+        ))}
       </MapView>
       <TouchableOpacity
         onPress={recenterMap}

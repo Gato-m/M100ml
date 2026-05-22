@@ -48,6 +48,18 @@
       "name": "Vaijes iela",
       "coordinates": [56.8543642151258, 26.222739907179268],
       "icon": "no_entry"
+    },
+    {
+      "id": "sign-5",
+      "name": "Tirgus iela",
+      "coordinates": [56.853413066417474, 26.221226876687965],
+      "icon": "no_entry"
+    },
+    {
+      "id": "sign-6",
+      "name": "Blaumaņa iela",
+      "coordinates": [56.85371004900364, 26.220210492559126],
+      "icon": "no_entry"
     }
   ],
   "entry": [

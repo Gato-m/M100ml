@@ -1,0 +1,8 @@
+const iconMap: Record<string, any> = {
+  no_entry: require("../../assets/project/icons/stop.png"),
+  guest_entry: require("../../assets/project/icons/green_arrow.png"),
+  staff_entry: require("../../assets/project/icons/blue_arrow.png"),
+  medicine: require("../../assets/project/icons/med.png"),
+  wc: require("../../assets/project/icons/wc.png"),
+};
+export default iconMap;
