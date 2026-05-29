@@ -95,18 +95,19 @@
   "staff_entry": [
     {
       "id": "staff-1",
+      "streetName": "Personāla ieeja",
       "coordinates": [56.85432411652407, 26.222852691242273],
       "icon": "staff_entry"
     }
   ],
   "wc": {
     "id": "wc-1",
-    "coordinates": [56.85332148438579, 26.220988424690933],
+    "coordinates": [56.853283583114134, 26.220898651848845],
     "icon": "wc"
   },
   "medicine": {
     "id": "med-1",
-    "coordinates": [56.853586936171446, 26.220352741152443],
+    "coordinates": [56.853553432511184, 26.220437313055548],
     "icon": "medicine"
   }
 }

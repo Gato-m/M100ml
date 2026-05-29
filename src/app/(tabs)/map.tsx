@@ -11,6 +11,37 @@ import iconMap from "../../data/iconMap";
 import eventData from "../../data/satiksme.json";
 
 export default function MapScreen() {
+  // Example: specify transform for each entry icon by index (or id)
+  // You should fill in the correct values for your use case
+  const entryIconTransforms = eventData.entry
+    ? eventData.entry.map((entry, idx) => {
+        if (entry.id === "entry-1") {
+          return { translateX: 20, translateY: -8, rotate: 45 };
+        }
+        if (entry.id === "entry-2") {
+          return { translateX: 12, translateY: -5, rotate: 130 };
+        }
+        if (entry.id === "entry-3") {
+          return { translateX: 23, translateY: -4, rotate: -140 };
+        }
+        if (entry.id === "entry-4") {
+          return { translateX: 7, translateY: 0, rotate: -45 };
+        }
+        return { translateX: 0, translateY: 0, rotate: 0 };
+      })
+    : [];
+
+  // Staff entry transforms (for staff_entry markers)
+  const staffEntryIconTransforms = eventData.staff_entry
+    ? eventData.staff_entry.map((entry, idx) => {
+        // You can add more cases if you have multiple staff entries
+        return {
+          translateX: 9,
+          translateY: -3,
+          rotate: -155,
+        };
+      })
+    : [];
   const mapRef = useRef(null);
   const [mode, setMode] = useState<"car" | "walk">("car");
   const initialRegion = {
@@ -54,9 +85,9 @@ export default function MapScreen() {
         {/* Event area polygon: red for car, green for walk */}
         <Polygon
           coordinates={eventAreaCoords}
-          strokeColor={mode === "car" ? "#FF0000" : "#3CB371"}
+          strokeColor={mode === "car" ? "#d30505" : "#1c7d48"}
           fillColor={
-            mode === "car" ? "rgba(255,0,0,0.2)" : "rgba(60,179,113,0.2)"
+            mode === "car" ? "rgba(255,0,0,0.3)" : "rgba(60,179,113,0.3)"
           }
           strokeWidth={1}
         />
@@ -114,12 +145,17 @@ export default function MapScreen() {
           <>
             {/* entry */}
             {eventData.entry &&
-              eventData.entry.map((entry) => {
+              eventData.entry.map((entry, idx) => {
                 const Icon = iconMap[entry.icon] || iconMap["entry"];
                 const pillHeight = 28;
                 const gap = 6;
                 const iconHeight = 28;
                 const wrapperHeight = pillHeight + gap + iconHeight + gap;
+                // Get transform for this entry
+                const transform = entryIconTransforms[idx] || {
+                  translateX: 0,
+                  rotate: 0,
+                };
                 return (
                   <Marker
                     key={entry.id}
@@ -145,13 +181,18 @@ export default function MapScreen() {
                           { height: pillHeight, marginBottom: gap },
                         ]}
                       >
-                        <Text style={styles.pillText}>Ieeja</Text>
+                        <Text style={styles.pillText}>{entry.streetName}</Text>
                       </View>
                       <View
                         style={{
                           height: iconHeight,
                           justifyContent: "flex-end",
                           alignItems: "center",
+                          transform: [
+                            { translateX: transform.translateX },
+                            { translateY: transform.translateY },
+                            { rotate: `${transform.rotate}deg` },
+                          ],
                         }}
                       >
                         <Icon width={iconHeight} height={iconHeight} />
@@ -162,12 +203,17 @@ export default function MapScreen() {
               })}
             {/* staff_entry */}
             {eventData.staff_entry &&
-              eventData.staff_entry.map((entry) => {
+              eventData.staff_entry.map((entry, idx) => {
                 const Icon = iconMap[entry.icon] || iconMap["staff_entry"];
                 const pillHeight = 28;
                 const gap = 6;
                 const iconHeight = 28;
                 const wrapperHeight = pillHeight + gap + iconHeight + gap;
+                const transform = staffEntryIconTransforms[idx] || {
+                  translateX: 0,
+                  translateY: 0,
+                  rotate: 0,
+                };
                 return (
                   <Marker
                     key={entry.id}
@@ -200,6 +246,11 @@ export default function MapScreen() {
                           height: iconHeight,
                           justifyContent: "flex-end",
                           alignItems: "center",
+                          transform: [
+                            { translateX: transform.translateX },
+                            { translateY: transform.translateY },
+                            { rotate: `${transform.rotate}deg` },
+                          ],
                         }}
                       >
                         <Icon width={iconHeight} height={iconHeight} />
