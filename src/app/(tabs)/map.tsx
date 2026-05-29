@@ -110,7 +110,162 @@ export default function MapScreen() {
               </Marker>
             );
           })}
-        {/* ...existing code... */}
+        {mode === "walk" && (
+          <>
+            {/* entry */}
+            {eventData.entry &&
+              eventData.entry.map((entry) => {
+                const Icon = iconMap[entry.icon] || iconMap["entry"];
+                const pillHeight = 28;
+                const gap = 6;
+                const iconHeight = 28;
+                const wrapperHeight = pillHeight + gap + iconHeight + gap;
+                return (
+                  <Marker
+                    key={entry.id}
+                    coordinate={{
+                      latitude: entry.coordinates[0],
+                      longitude: entry.coordinates[1],
+                    }}
+                    anchor={{
+                      x: 0.5,
+                      y: (pillHeight + gap + iconHeight / 2) / wrapperHeight,
+                    }}
+                  >
+                    <View
+                      style={{
+                        height: wrapperHeight,
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      <View
+                        style={[
+                          styles.pill,
+                          { height: pillHeight, marginBottom: gap },
+                        ]}
+                      >
+                        <Text style={styles.pillText}>Ieeja</Text>
+                      </View>
+                      <View
+                        style={{
+                          height: iconHeight,
+                          justifyContent: "flex-end",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Icon width={iconHeight} height={iconHeight} />
+                      </View>
+                    </View>
+                  </Marker>
+                );
+              })}
+            {/* staff_entry */}
+            {eventData.staff_entry &&
+              eventData.staff_entry.map((entry) => {
+                const Icon = iconMap[entry.icon] || iconMap["staff_entry"];
+                const pillHeight = 28;
+                const gap = 6;
+                const iconHeight = 28;
+                const wrapperHeight = pillHeight + gap + iconHeight + gap;
+                return (
+                  <Marker
+                    key={entry.id}
+                    coordinate={{
+                      latitude: entry.coordinates[0],
+                      longitude: entry.coordinates[1],
+                    }}
+                    anchor={{
+                      x: 0.5,
+                      y: (pillHeight + gap + iconHeight / 2) / wrapperHeight,
+                    }}
+                  >
+                    <View
+                      style={{
+                        height: wrapperHeight,
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      <View
+                        style={[
+                          styles.pill,
+                          { height: pillHeight, marginBottom: gap },
+                        ]}
+                      >
+                        <Text style={styles.pillText}>Personāla ieeja</Text>
+                      </View>
+                      <View
+                        style={{
+                          height: iconHeight,
+                          justifyContent: "flex-end",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Icon width={iconHeight} height={iconHeight} />
+                      </View>
+                    </View>
+                  </Marker>
+                );
+              })}
+            {/* wc (icon only, no pill) */}
+            {eventData.wc &&
+              (() => {
+                const entry = eventData.wc;
+                const Icon = iconMap[entry.icon] || iconMap["wc"];
+                const iconHeight = 28;
+                return (
+                  <Marker
+                    key={entry.id}
+                    coordinate={{
+                      latitude: entry.coordinates[0],
+                      longitude: entry.coordinates[1],
+                    }}
+                    anchor={{ x: 0.5, y: 0.5 }}
+                  >
+                    <View
+                      style={{
+                        height: iconHeight,
+                        width: iconHeight,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Icon width={iconHeight} height={iconHeight} />
+                    </View>
+                  </Marker>
+                );
+              })()}
+            {/* medicine (icon only, no pill) */}
+            {eventData.medicine &&
+              (() => {
+                const entry = eventData.medicine;
+                const Icon = iconMap[entry.icon] || iconMap["medicine"];
+                const iconHeight = 28;
+                return (
+                  <Marker
+                    key={entry.id}
+                    coordinate={{
+                      latitude: entry.coordinates[0],
+                      longitude: entry.coordinates[1],
+                    }}
+                    anchor={{ x: 0.5, y: 0.5 }}
+                  >
+                    <View
+                      style={{
+                        height: iconHeight,
+                        width: iconHeight,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Icon width={iconHeight} height={iconHeight} />
+                    </View>
+                  </Marker>
+                );
+              })()}
+          </>
+        )}
       </MapView>
       {/* Pogas kartes labajā apakšējā stūrī */}
       <View style={styles.buttonContainer}>
