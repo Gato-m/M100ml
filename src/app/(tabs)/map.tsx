@@ -1,13 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import MapView, {
-  Marker,
-  Polygon,
-  PROVIDER_DEFAULT,
-  UrlTile,
-} from "react-native-maps";
-import iconMap from "../../data/iconMap";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import MapView, { Polygon, PROVIDER_DEFAULT, UrlTile } from "react-native-maps";
 import eventData from "../../data/satiksme.json";
 
 export default function MapScreen() {
@@ -31,32 +25,11 @@ export default function MapScreen() {
     ([lng, lat]) => ({ latitude: lat, longitude: lng }),
   );
 
-  // Icon transforms for walk mode entry and staff_entry icons (by entry id)
-  const walkIconTransforms: Record<string, any[]> = {
-    // Example: rotate and move down Blaumaņa iela
-    "entry-4": [{ rotate: "-5deg" }, { translateY: 5 }],
-    // Staff entry: rotate -10deg, move right 5
-    "staff-1": [{ rotate: "-10deg" }, { translateX: 5 }],
-    // Add more entries as needed
-  };
-
-  function getIconTransform(id: string) {
-    return walkIconTransforms[id]
-      ? [{ transform: walkIconTransforms[id] }]
-      : [];
-  }
+  // ...existing code...
 
   return (
     <View style={{ flex: 1 }}>
-      {/* TEST: SVG icon outside MapView */}
-      <View style={{ alignItems: "center", marginTop: 24 }}>
-        {(() => {
-          const SvgIcon = iconMap["guest_entry"];
-          return typeof SvgIcon === "function" ? (
-            <SvgIcon width={48} height={48} />
-          ) : null;
-        })()}
-      </View>
+      {/* ...existing code... */}
       <MapView
         ref={mapRef}
         style={StyleSheet.absoluteFillObject}
@@ -80,172 +53,45 @@ export default function MapScreen() {
           }
           strokeWidth={1}
         />
-        {/* Car mode: show no_entry icons and street names */}
-        {mode === "car" &&
-          eventData.no_entry.map((entry) => (
-            <Marker
-              key={entry.id}
-              coordinate={{
-                latitude: entry.coordinates[0],
-                longitude: entry.coordinates[1],
-              }}
-              anchor={{ x: 0.5, y: 0.5 }}
-            >
-              <View style={{ alignItems: "center" }}>
-                <View style={{ marginBottom: 2 }}>
-                  <Text style={styles.streetLabel}>{entry.name}</Text>
-                </View>
-                <View>
-                  <Image
-                    source={iconMap[entry.icon]}
-                    style={styles.iconImage}
-                    resizeMode="contain"
-                  />
-                </View>
-              </View>
-            </Marker>
-          ))}
-        {/* Walk mode: show entry icons and street names, and staff_entry icons */}
-        {mode === "walk" &&
-          eventData.entry.map((entry) => {
-            const SvgIcon = iconMap[entry.icon];
-            const iconStyle = [styles.iconImage, ...getIconTransform(entry.id)];
-            return (
-              <Marker
-                key={entry.id}
-                coordinate={{
-                  latitude: entry.coordinates[0],
-                  longitude: entry.coordinates[1],
-                }}
-                anchor={{ x: 0.5, y: 0.5 }}
-              >
-                <View style={{ alignItems: "center" }}>
-                  <View style={{ marginBottom: 2 }}>
-                    <Text style={styles.streetLabel}>{entry.streetName}</Text>
-                  </View>
-                  <View style={iconStyle}>
-                    {typeof SvgIcon === "function" && (
-                      <SvgIcon width={24} height={24} />
-                    )}
-                  </View>
-                </View>
-              </Marker>
-            );
-          })}
-        {mode === "walk" &&
-          eventData.staff_entry &&
-          eventData.staff_entry.map((entry, idx) => {
-            const SvgIcon = iconMap[entry.icon];
-            const iconStyle = [
-              styles.iconImage,
-              ...getIconTransform(entry.id || `staff-${idx}`),
-            ];
-            return (
-              <Marker
-                key={entry.id || `staff-${idx}`}
-                coordinate={{
-                  latitude: entry.coordinates[0],
-                  longitude: entry.coordinates[1],
-                }}
-                anchor={{ x: 0.5, y: 0.5 }}
-              >
-                <View style={{ alignItems: "center" }}>
-                  <View style={{ marginBottom: 2 }}>
-                    <Text style={styles.streetLabel}>Personāla ieeja</Text>
-                  </View>
-                  <View style={iconStyle}>
-                    {typeof SvgIcon === "function" && (
-                      <SvgIcon width={24} height={24} />
-                    )}
-                  </View>
-                </View>
-              </Marker>
-            );
-          })}
+        {/* ...existing code... */}
+        {/* ...existing code... */}
       </MapView>
-      {/* New buttons above recenter */}
-      <View
-        style={{
-          position: "absolute",
-          right: 20,
-          bottom: 80,
-          gap: 12,
-          alignItems: "flex-end",
-        }}
-      >
-        <TouchableOpacity
-          style={[
-            styles.modeButton,
-            mode === "car" && { backgroundColor: "#e0e0e0" },
-          ]}
-          activeOpacity={0.7}
-          onPress={() => setMode("car")}
-        >
-          <Ionicons name="car" size={24} color="#222" />
+      {/* Pogas kartes labajā apakšējā stūrī */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.iconButton} onPress={recenterMap}>
+          <Ionicons name="locate" size={28} color="#222" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.modeButton,
-            mode === "walk" && { backgroundColor: "#e0e0e0" },
-          ]}
-          activeOpacity={0.7}
-          onPress={() => setMode("walk")}
-        >
-          <Ionicons name="walk" size={24} color="#222" />
+        <TouchableOpacity style={styles.iconButton}>
+          <Ionicons name="car" size={28} color="#222" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <Ionicons name="walk" size={28} color="#222" />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        onPress={recenterMap}
-        style={styles.recenterButton}
-        activeOpacity={0.7}
-      >
-        <Ionicons name="locate" size={28} color="#222" />
-      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  recenterButton: {
+  buttonContainer: {
     position: "absolute",
-    bottom: 20,
     right: 20,
-    backgroundColor: "#fff",
-    borderRadius: 30,
-    padding: 10,
-    elevation: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
+    bottom: 20,
+    alignItems: "flex-end",
+    gap: 10,
   },
-  modeButton: {
+  iconButton: {
     backgroundColor: "#fff",
-    borderRadius: 24,
-    padding: 8,
-    elevation: 4,
+    borderRadius: 28,
+    width: 56,
+    height: 56,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 12,
+    elevation: 3,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    marginBottom: 0,
-  },
-  streetLabel: {
-    fontSize: 13,
-    fontWeight: "bold",
-    color: "#222",
-    backgroundColor: "rgba(255,255,255)",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    marginTop: -30,
-    overflow: "hidden",
-    textAlign: "center",
-    borderWidth: 1,
-    borderColor: "#b3b3b3",
-  },
-  iconImage: {
-    width: 24,
-    height: 24,
   },
 });
