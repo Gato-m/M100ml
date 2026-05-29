@@ -51,6 +51,7 @@ export default function MapScreen() {
           flipY={false}
           tileSize={256}
         />
+        {/* Event area polygon: red for car, green for walk */}
         <Polygon
           coordinates={eventAreaCoords}
           strokeColor={mode === "car" ? "#FF0000" : "#3CB371"}
@@ -59,15 +60,16 @@ export default function MapScreen() {
           }
           strokeWidth={1}
         />
-        {/* Marķieri no entry ar stop.svg un ielas nosaukumu */}
-        {eventData.no_entry &&
+
+        {/* Show traffic restrictions only in car mode */}
+        {mode === "car" &&
+          eventData.no_entry &&
           eventData.no_entry.map((entry) => {
             const StopIcon = iconMap["stop"];
-            // Pill height + gap + icon height
             const pillHeight = 28;
             const gap = 6;
             const iconHeight = 24;
-            const wrapperHeight = pillHeight + gap + iconHeight + gap; // gap arī apakšā
+            const wrapperHeight = pillHeight + gap + iconHeight + gap;
             return (
               <Marker
                 key={entry.id}
@@ -115,11 +117,31 @@ export default function MapScreen() {
         <TouchableOpacity style={styles.iconButton} onPress={recenterMap}>
           <Ionicons name="locate" size={28} color="#222" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Ionicons name="car" size={28} color="#222" />
+        <TouchableOpacity
+          style={[
+            styles.iconButton,
+            mode === "car" && { backgroundColor: "#FF0000" },
+          ]}
+          onPress={() => setMode("car")}
+        >
+          <Ionicons
+            name="car"
+            size={28}
+            color={mode === "car" ? "#fff" : "#222"}
+          />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Ionicons name="walk" size={28} color="#222" />
+        <TouchableOpacity
+          style={[
+            styles.iconButton,
+            mode === "walk" && { backgroundColor: "#3CB371" },
+          ]}
+          onPress={() => setMode("walk")}
+        >
+          <Ionicons
+            name="walk"
+            size={28}
+            color={mode === "walk" ? "#fff" : "#222"}
+          />
         </TouchableOpacity>
       </View>
     </View>
