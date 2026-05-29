@@ -60,8 +60,8 @@ export default function MapScreen() {
           strokeWidth={1}
         />
         {/* Marķieri no entry ar stop.svg un ielas nosaukumu */}
-        {eventData.entry &&
-          eventData.entry.map((entry) => {
+        {eventData.no_entry &&
+          eventData.no_entry.map((entry) => {
             const StopIcon = iconMap["stop"];
             return (
               <Marker
@@ -70,14 +70,9 @@ export default function MapScreen() {
                   latitude: entry.coordinates[0],
                   longitude: entry.coordinates[1],
                 }}
-                anchor={{ x: 0.5, y: 1 }}
+                anchor={{ x: 0.5, y: 0.5 }}
               >
-                <View style={{ alignItems: "center" }}>
-                  <View style={styles.pill}>
-                    <Text style={styles.pillText}>{entry.streetName}</Text>
-                  </View>
-                  <StopIcon width={26} height={26} />
-                </View>
+                <StopIcon width={28} height={28} />
               </Marker>
             );
           })}
@@ -128,7 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingHorizontal: 12,
     paddingVertical: 4,
-    marginBottom: 4,
+    marginTop: -24,
     borderWidth: 1,
     borderColor: "#b3b3b3",
     elevation: 2,
