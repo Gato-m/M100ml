@@ -104,7 +104,7 @@
     "coordinates": [56.85332148438579, 26.220988424690933],
     "icon": "wc"
   },
-  "medical": {
+  "medicine": {
     "id": "med-1",
     "coordinates": [56.853586936171446, 26.220352741152443],
     "icon": "medicine"

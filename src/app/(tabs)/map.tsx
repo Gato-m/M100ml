@@ -1,7 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import MapView, { Polygon, PROVIDER_DEFAULT, UrlTile } from "react-native-maps";
+import MapView, {
+  Marker,
+  Polygon,
+  PROVIDER_DEFAULT,
+  UrlTile,
+} from "react-native-maps";
+import iconMap from "../../data/iconMap";
 import eventData from "../../data/satiksme.json";
 
 export default function MapScreen() {
@@ -10,8 +16,8 @@ export default function MapScreen() {
   const initialRegion = {
     latitude: 56.85409484130903,
     longitude: 26.22099114195495,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
+    latitudeDelta: 0.006,
+    longitudeDelta: 0.006,
   };
 
   const recenterMap = () => {
@@ -53,7 +59,28 @@ export default function MapScreen() {
           }
           strokeWidth={1}
         />
-        {/* ...existing code... */}
+        {/* Marķieri no entry ar stop.svg un ielas nosaukumu */}
+        {eventData.entry &&
+          eventData.entry.map((entry) => {
+            const StopIcon = iconMap["stop"];
+            return (
+              <Marker
+                key={entry.id}
+                coordinate={{
+                  latitude: entry.coordinates[0],
+                  longitude: entry.coordinates[1],
+                }}
+                anchor={{ x: 0.5, y: 1 }}
+              >
+                <View style={{ alignItems: "center" }}>
+                  <View style={styles.pill}>
+                    <Text style={styles.pillText}>{entry.streetName}</Text>
+                  </View>
+                  <StopIcon width={26} height={26} />
+                </View>
+              </Marker>
+            );
+          })}
         {/* ...existing code... */}
       </MapView>
       {/* Pogas kartes labajā apakšējā stūrī */}
@@ -72,19 +99,21 @@ export default function MapScreen() {
   );
 }
 
+import { Text } from "react-native";
+
 const styles = StyleSheet.create({
   buttonContainer: {
     position: "absolute",
     right: 20,
     bottom: 20,
     alignItems: "flex-end",
-    gap: 10,
+    gap: 1,
   },
   iconButton: {
     backgroundColor: "#fff",
     borderRadius: 28,
-    width: 56,
-    height: 56,
+    width: 46,
+    height: 46,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 12,
@@ -93,5 +122,25 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+  },
+  pill: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    marginBottom: 4,
+    borderWidth: 1,
+    borderColor: "#b3b3b3",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+  },
+  pillText: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#222",
+    textAlign: "center",
   },
 });
