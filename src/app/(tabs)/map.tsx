@@ -63,6 +63,11 @@ export default function MapScreen() {
         {eventData.no_entry &&
           eventData.no_entry.map((entry) => {
             const StopIcon = iconMap["stop"];
+            // Pill height + gap + icon height
+            const pillHeight = 28;
+            const gap = 6;
+            const iconHeight = 24;
+            const wrapperHeight = pillHeight + gap + iconHeight + gap; // gap arī apakšā
             return (
               <Marker
                 key={entry.id}
@@ -70,9 +75,36 @@ export default function MapScreen() {
                   latitude: entry.coordinates[0],
                   longitude: entry.coordinates[1],
                 }}
-                anchor={{ x: 0.5, y: 0.5 }}
+                anchor={{
+                  x: 0.5,
+                  y: (pillHeight + gap + iconHeight / 2) / wrapperHeight,
+                }}
               >
-                <StopIcon width={28} height={28} />
+                <View
+                  style={{
+                    height: wrapperHeight,
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <View
+                    style={[
+                      styles.pill,
+                      { height: pillHeight, marginBottom: gap },
+                    ]}
+                  >
+                    <Text style={styles.pillText}>{entry.name}</Text>
+                  </View>
+                  <View
+                    style={{
+                      height: iconHeight,
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                    }}
+                  >
+                    <StopIcon width={iconHeight} height={iconHeight} />
+                  </View>
+                </View>
               </Marker>
             );
           })}
@@ -123,7 +155,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingHorizontal: 12,
     paddingVertical: 4,
-    marginTop: -24,
+    marginTop: -28,
     borderWidth: 1,
     borderColor: "#b3b3b3",
     elevation: 2,
@@ -131,9 +163,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 1,
+    justifyContent: "center",
   },
   pillText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "bold",
     color: "#222",
     textAlign: "center",
